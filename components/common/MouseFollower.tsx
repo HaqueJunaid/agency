@@ -1,0 +1,102 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "motion/react";
+
+export default function MouseFollower() {
+    const cursorX = useMotionValue(-100);
+    const cursorY = useMotionValue(-100);
+    const [cursorType, setCursorType] = useState<"default" | "pointer" | "text">("default");
+    const [cursorText, setCursorText] = useState("");
+    const [isVisible, setIsVisible] = useState(false);
+
+    // Dynamic configuration for trailing lag effect
+    const springConfig = { damping: 30, stiffness: 350, mass: 0.5 };
+    const cursorXSpring = useSpring(cursorX, springConfig);
+    const cursorYSpring = useSpring(cursorY, springConfig);
+
+    useEffect(() => {
+        const moveCursor = (e: MouseEvent) => {
+            cursorX.set(e.clientX);
+            cursorY.set(e.clientY);
+            if (!isVisible) setIsVisible(true);
+        };
+
+        const handleMouseLeaveWindow = () => {
+            setIsVisible(false);
+        };
+
+        window.addEventListener("mousemove", moveCursor);
+        document.addEventListener("mouseleave", handleMouseLeaveWindow);
+
+        return () => {
+            window.removeEventListener("mousemove", moveCursor);
+            document.removeEventListener("mouseleave", handleMouseLeaveWindow);
+        };
+    }, [cursorX, cursorY, isVisible]);
+
+    useEffect(() => {
+        const handleMouseEnter = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target) return;
+            
+            const elementWithText = target.closest("[data-cursor-text]");
+            const isClickable = target.closest("a, button, [role='button']") !== null;
+
+            if (elementWithText) {
+                setCursorType("text");
+                setCursorText(elementWithText.getAttribute("data-cursor-text") || "");
+            } else if (isClickable) {
+                setCursorType("pointer");
+            } else {
+                setCursorType("default");
+            }
+        };
+
+        const handleMouseLeave = () => {
+            setCursorType("default");
+            setCursorText("");
+        };
+
+        // Capture phase listeners to handle pointer hovers globally
+        document.addEventListener("mouseover", handleMouseEnter, true);
+        document.addEventListener("mouseout", handleMouseLeave, true);
+
+        return () => {
+            document.removeEventListener("mouseover", handleMouseEnter, true);
+            document.removeEventListener("mouseout", handleMouseLeave, true);
+        };
+    }, []);
+
+    if (!isVisible) return null;
+
+    const size = cursorType === "text" ? 80 : cursorType === "pointer" ? 50 : 16;
+
+    return (
+        <motion.div
+            className="hidden fixed top-0 left-0 rounded-full pointer-events-none z-9999 lg:flex items-center justify-center border border-brand-primary bg-transparent text-brand-secondary text-[10px] font-label font-bold tracking-widest uppercase overflow-hidden"
+            style={{
+                x: cursorXSpring,
+                y: cursorYSpring,
+                translateX: "-50%",
+                translateY: "-50%",
+            }}
+            animate={{
+                width: size,
+                height: size,
+                backgroundColor: cursorType === "text" ? "var(--color-brand-primary)" : "rgba(var(--color-brand-primary), 0)",
+            }}
+            transition={{ type: "spring", stiffness: 350, damping: 22, mass: 0.5 }}
+        >
+            {cursorType === "text" && (
+                <motion.span 
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-brand-secondary text-center px-2 select-none"
+                >
+                    {cursorText}
+                </motion.span>
+            )}
+        </motion.div>
+    );
+}
