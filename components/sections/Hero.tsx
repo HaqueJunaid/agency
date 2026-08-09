@@ -1,6 +1,6 @@
 const Hero = () => {
     return (
-        <section className="relative w-full min-h-fit flex flex-col px-6 lg:px-16 pt-8 lg:pt-16 border-b-2 border-brand-primary overflow-hidden">
+        <section className="relative w-full min-h-fit flex flex-col px-6 lg:px-16 pt-8 lg:pt-16 overflow-hidden">
             <div className="relative z-10 flex flex-col gap-6 w-full mx-auto">
                 <div className="flex items-center gap-4">
                     <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-brand-neutral opacity-60"></div>

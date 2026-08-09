@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { navLinks } from "@/contants/index.";
-import type { NavbarProps } from "@/contants/index.";
+import { navLinks } from "@/constants";
+import type { NavbarProps } from "@/constants";
 import { Button } from "../ui/button";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
@@ -49,8 +49,8 @@ const Navbar = () => {
     return (
         <>
             <nav className={`px-6 md:px-16 py-5 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-colors duration-300 ${isOpen ? 'bg-transparent' : 'bg-brand-secondary'}`}>
-                <Link 
-                    href="/" 
+                <Link
+                    href="/"
                     className="font-heading font-black text-2xl md:text-5xl z-50 transition-colors duration-300"
                     style={{ color: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
                 >
@@ -72,22 +72,22 @@ const Navbar = () => {
                     </Button>
                 </div>
 
-                <button 
+                <button
                     onClick={() => setIsOpen(!isOpen)}
                     className="md:hidden z-50 flex flex-col justify-center items-center w-10 h-10 gap-1.5 focus:outline-none"
                     aria-label="Toggle Menu"
                 >
-                    <motion.span 
+                    <motion.span
                         animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
                         className="w-8 h-0.5 block transition-colors duration-300"
                         style={{ backgroundColor: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
                     />
-                    <motion.span 
+                    <motion.span
                         animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
                         className="w-8 h-0.5 block transition-colors duration-300"
                         style={{ backgroundColor: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
                     />
-                    <motion.span 
+                    <motion.span
                         animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
                         className="w-8 h-0.5 block transition-colors duration-300"
                         style={{ backgroundColor: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
@@ -95,17 +95,16 @@ const Navbar = () => {
                 </button>
             </nav>
 
-            {/* Fullscreen Mobile Menu Overlay */}
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div 
+                    <motion.div
                         variants={menuVariants}
                         initial="initial"
                         animate="animate"
                         exit="exit"
                         className="fixed inset-0 z-40 bg-brand-primary w-full h-screen flex flex-col justify-between px-6 pt-32 pb-12 overflow-hidden"
                     >
-                        <motion.ul 
+                        <motion.ul
                             variants={linkContainerVariants}
                             initial="initial"
                             animate="animate"
@@ -115,8 +114,8 @@ const Navbar = () => {
                             {navLinks.map(({ label, link }: NavbarProps, i) => (
                                 <div key={label} className="overflow-hidden mb-3">
                                     <motion.li variants={linkVariants}>
-                                        <Link 
-                                            href={link} 
+                                        <Link
+                                            href={link}
                                             onClick={() => setIsOpen(false)}
                                             className="font-heading font-black text-5xl sm:text-7xl text-brand-secondary hover:text-brand-tertiary transition-colors inline-block"
                                         >
@@ -127,7 +126,7 @@ const Navbar = () => {
                             ))}
                         </motion.ul>
 
-                        <motion.div 
+                        <motion.div
                             variants={bottomVariants}
                             initial="initial"
                             animate="animate"
