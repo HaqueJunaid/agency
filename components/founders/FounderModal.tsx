@@ -4,7 +4,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { animate, stagger } from "motion/react";
 import { createPortal } from "react-dom";
 import type { FounderModalProps } from "@/constants";
-import { Link, X } from "lucide-react";
+import { X } from "lucide-react";
+import Link from "next/link";
 
 export default function FounderModal({ founder, founderIndex, total, originRect, onClose }: FounderModalProps) {
     const modalRef = useRef<HTMLDivElement>(null);

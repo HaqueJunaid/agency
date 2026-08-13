@@ -63,17 +63,17 @@ const Navbar = () => {
                     className="relative z-50 flex items-baseline gap-0 select-none"
                     style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                 >
-                    <span className="font-heading font-black text-xl md:text-2xl tracking-tight leading-none">
+                    <span className="font-heading font-black text-2xl md:text-2xl tracking-tight leading-none">
                         IDEAL
                     </span>
                     <span
-                        className="font-serif italic font-medium text-brand-tertiary text-xl md:text-2xl leading-none px-1.5"
+                        className="font-serif italic font-medium text-brand-tertiary text-2xl md:text-2xl leading-none px-1.5"
                         style={{ color: isOpen ? "var(--color-brand-tertiary)" : undefined }}
                     >
                         Design
                     </span>
                     <span
-                        className="font-heading font-black text-xl md:text-2xl tracking-tight leading-none"
+                        className="font-heading font-black text-2xl md:text-2xl tracking-tight leading-none"
                         style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                     >
                         .
@@ -163,7 +163,7 @@ const Navbar = () => {
                                         <Link
                                             href={link}
                                             onClick={() => setIsOpen(false)}
-                                            className="font-heading font-black text-[13vw] sm:text-7xl text-brand-secondary
+                                            className="font-heading font-black text-[8vw] text-brand-secondary
                                                        hover:text-brand-tertiary transition-colors duration-300 inline-block leading-[1.1]"
                                         >
                                             {label}
@@ -219,7 +219,7 @@ const Navbar = () => {
                                         <Link
                                             key={href}
                                             href={href}
-                                            className="font-label text-[9px] tracking-[.18em] text-brand-secondary/50 hover:text-brand-tertiary transition-colors duration-200 uppercase"
+                                            className="font-label text-[12px] tracking-[.18em] text-brand-secondary/50 hover:text-brand-tertiary transition-colors duration-200 uppercase"
                                         >
                                             {label}
                                         </Link>
