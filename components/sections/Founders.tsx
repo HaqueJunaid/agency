@@ -20,7 +20,7 @@ export default function Founders() {
     return (
         <>
             <section
-                id="founders"
+                id="about"
                 className="relative w-full min-h-screen py-[clamp(70px,10vw,140px)] px-6 lg:px-16 bg-transparent text-brand-secondary overflow-hidden"
             >
                 {/* ── Header ── */}

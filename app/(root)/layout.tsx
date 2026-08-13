@@ -5,21 +5,24 @@ import PageLoader from "@/components/common/PageLoader";
 import Footer from "@/components/common/Footer";
 import { ContactProvider } from "@/context/ContactContext";
 import ContactModal from "@/components/common/ContactModal";
+import SmoothScroll from "@/components/common/SmoothScroll";
 
 const RootLayout = ({ children }: {children: React.ReactNode}) => {
     return (
         <ContactProvider>
-            <div className="relative min-h-screen w-full bg-brand-secondary overflow-x-clip flex flex-col">
-                <PageLoader />
-                <MouseFollower />
-                <AnimatedBackground />
-                <Navbar />
-                <div className="relative z-10 bg-brand-secondary md:mb-[620px]">
-                    {children}
+            <SmoothScroll>
+                <div className="relative min-h-screen w-full bg-brand-secondary overflow-x-clip flex flex-col">
+                    <PageLoader />
+                    <MouseFollower />
+                    <AnimatedBackground />
+                    <Navbar />
+                    <div className="relative z-10 bg-brand-secondary md:mb-[620px]">
+                        {children}
+                    </div>
+                    <Footer />
+                    <ContactModal />
                 </div>
-                <Footer />
-                <ContactModal />
-            </div>
+            </SmoothScroll>
         </ContactProvider>
     );
 };
