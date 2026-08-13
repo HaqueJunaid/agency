@@ -7,6 +7,8 @@ import type { NavbarProps } from "@/constants";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
 import AnimatedNavLink from "@/components/navbar/AnimatedNavLink";
+import { useContact } from "@/context/ContactContext";
+import { ArrowUp, ArrowUpIcon } from "lucide-react";
 
 const menuVariants: Variants = {
     initial: { clipPath: "inset(0 0 100% 0)" },
@@ -32,6 +34,7 @@ const footerVariants: Variants = {
 };
 
 const Navbar = () => {
+    const { openContact } = useContact();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
@@ -83,7 +86,11 @@ const Navbar = () => {
                 <ul className="hidden md:flex items-center gap-7 lg:gap-10 absolute left-1/2 -translate-x-1/2">
                     {navLinks.map(({ label, link }: NavbarProps) => (
                         <li key={label}>
-                            <AnimatedNavLink label={label} link={link} />
+                            <AnimatedNavLink
+                                label={label}
+                                link={link}
+                                onClick={link === "#contact" ? openContact : undefined}
+                            />
                         </li>
                     ))}
                 </ul>
@@ -99,20 +106,15 @@ const Navbar = () => {
 
                     <div className="w-px h-4 bg-brand-primary/15" />
 
-                    <Link
-                        href="#contact"
+                    <button
+                        onClick={openContact}
                         className="group flex items-center gap-2 font-label font-bold text-[11px] tracking-[.14em] uppercase text-brand-primary
                                    border border-brand-primary/20 px-5 py-2.5 hover:bg-brand-primary hover:text-brand-secondary hover:border-brand-primary
-                                   transition-all duration-300"
+                                   transition-all duration-300 cursor-pointer bg-transparent"
                     >
                         Let&apos;s Talk
-                        <svg
-                            className="w-3 h-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
-                            viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5"
-                        >
-                            <path d="M1 11L11 1M11 1H4M11 1V8" />
-                        </svg>
-                    </Link>
+                        <ArrowUpIcon className="size-4 rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+                    </button>
                 </div>
 
                 <button
@@ -160,14 +162,27 @@ const Navbar = () => {
                             {navLinks.map(({ label, link }: NavbarProps, i) => (
                                 <div key={label} className="overflow-hidden border-b border-brand-secondary/8 py-6">
                                     <motion.li variants={linkVariants} className="flex items-baseline justify-between">
-                                        <Link
-                                            href={link}
-                                            onClick={() => setIsOpen(false)}
-                                            className="font-heading font-black text-[8vw] text-brand-secondary
-                                                       hover:text-brand-tertiary transition-colors duration-300 inline-block leading-[1.1]"
-                                        >
-                                            {label}
-                                        </Link>
+                                        {link === "#contact" ? (
+                                            <button
+                                                onClick={() => {
+                                                    setIsOpen(false);
+                                                    openContact();
+                                                }}
+                                                className="font-heading font-black text-[8vw] text-brand-secondary
+                                                           hover:text-brand-tertiary transition-colors duration-300 inline-block leading-[1.1] text-left cursor-pointer bg-transparent border-none p-0"
+                                            >
+                                                {label}
+                                            </button>
+                                        ) : (
+                                            <Link
+                                                href={link}
+                                                onClick={() => setIsOpen(false)}
+                                                className="font-heading font-black text-[8vw] text-brand-secondary
+                                                           hover:text-brand-tertiary transition-colors duration-300 inline-block leading-[1.1]"
+                                            >
+                                                {label}
+                                            </Link>
+                                        )}
                                         <span className="font-label text-brand-secondary/25 text-[10px] tracking-widest">
                                             {String(i + 1).padStart(2, "0")}
                                         </span>

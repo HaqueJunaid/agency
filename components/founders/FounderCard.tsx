@@ -3,6 +3,7 @@
 import { useRef, useCallback } from "react";
 import { animate } from "motion/react";
 import type { Founder } from "@/constants";
+import { ArrowUpIcon } from "lucide-react";
 
 interface FounderCardProps {
     founder: Founder;
@@ -80,7 +81,7 @@ export default function FounderCard({ founder, index, total, onOpen, hidden }: F
                            border border-white/25 rounded-full text-white text-base
                            transition-colors duration-300"
             >
-                ↗
+                <ArrowUpIcon className="size-4 rotate-45 group-hover:rotate-0 transition-transform duration-300" />
             </span>
 
             {/* Content */}

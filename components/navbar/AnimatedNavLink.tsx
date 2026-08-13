@@ -4,18 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 
-export default function AnimatedNavLink({ label, link }: { label: string; link: string }) {
+export default function AnimatedNavLink({ label, link, onClick }: { label: string; link: string; onClick?: () => void }) {
     const [hovered, setHovered] = useState(false);
     const chars = label.split("");
 
-    return (
-        <Link
-            href={link}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            className="relative inline-flex overflow-hidden font-mono font-bold text-sm text-brand-primary cursor-pointer py-0.5"
-            style={{ lineHeight: "1.2em", height: "1.2em" }}
-        >
+    const wrapperClass = "relative inline-flex overflow-hidden font-mono font-bold text-sm text-brand-primary cursor-pointer py-0.5 bg-transparent border-none p-0 text-left";
+    const inlineStyles = { lineHeight: "1.2em", height: "1.2em" };
+
+    const content = (
+        <>
             <span className="flex" aria-hidden={hovered}>
                 {chars.map((char, i) => (
                     <motion.span
@@ -49,6 +46,32 @@ export default function AnimatedNavLink({ label, link }: { label: string; link: 
                     </motion.span>
                 ))}
             </span>
+        </>
+    );
+
+    if (onClick) {
+        return (
+            <button
+                onClick={onClick}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+                className={wrapperClass}
+                style={inlineStyles}
+            >
+                {content}
+            </button>
+        );
+    }
+
+    return (
+        <Link
+            href={link}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            className={wrapperClass}
+            style={inlineStyles}
+        >
+            {content}
         </Link>
     );
 }

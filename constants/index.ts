@@ -13,12 +13,12 @@ export const navLinks: NavbarProps[] = [
         link: "#services",
     },
     {
-        label: "ABOUT",
-        link: "#about",
-    },
-    {
         label: "PROCESS",
         link: "#process",
+    },
+    {
+        label: "ABOUT",
+        link: "#about",
     },
     {
         label: "CONTACT",
@@ -152,3 +152,42 @@ export interface FounderModalProps {
     originRect: DOMRect;
     onClose: () => void;
 }
+
+export interface ProcessStep {
+    id: string;
+    tag: string;
+    title: string;
+    description: string;
+    outputs: string[];
+}
+
+export const processSteps: ProcessStep[] = [
+    {
+        id: "01",
+        tag: "AUDIT & DISCOVERY",
+        title: "Deep-Dive Market Audit",
+        description: "We audit your existing analytics data, run extensive research on your primary competitors, and inspect your assets. We define exact baselines and locate immediate opportunities.",
+        outputs: ["Asset & Traffic Audit", "Competitor Matrix Report", "Baseline ROI Forecast"]
+    },
+    {
+        id: "02",
+        tag: "STRATEGY & ARCHITECTURE",
+        title: "The Growth Blueprint",
+        description: "We translate insights into strategy. We map out your target buyer personas, structure the visual/copy angle, and create a comprehensive 90-day execution blueprint.",
+        outputs: ["Target Persona Framework", "90-Day Campaign Blueprint", "Creative Direction Guidelines"]
+    },
+    {
+        id: "03",
+        tag: "PRODUCTION & CREATIVE",
+        title: "High-Velocity Asset Creation",
+        description: "Our creative team produces conversion-focused static layouts, ad copy hooks, landing pages, and vertical videos designed to bypass scroll fatigue and demand attention.",
+        outputs: ["Performance Ad Copy", "High-Converting Landers", "Video Hook Variations"]
+    },
+    {
+        id: "04",
+        tag: "EXPERIMENTATION & SCALE",
+        title: "Launch, Analyze & Scale",
+        description: "We launch the campaigns and run daily micro-experiments. By monitoring real-time data, we adjust budgets, optimize user journeys, and aggressively scale winning variations.",
+        outputs: ["Multi-Variant Ad Experiments", "Weekly Insights & Reports", "Budget Scaling Execution"]
+    }
+];
