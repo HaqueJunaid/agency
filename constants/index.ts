@@ -126,9 +126,9 @@ export const founders: Founder[] = [
         bio: "Junaid combines technical expertise with a founder’s mindset to turn ideas into scalable digital products, building solutions that are purposeful, practical, and made to create lasting impact.",
         stats: [["4+", "Years"], ["25", "Brands"], ["30+", "Projects"]],
         images: [
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1400&q=90",
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1400&q=90",
-            "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1400&q=90",
+            "/assets/Junaid_1.png",
+            "/assets/Junaid_2.jpeg",
+            "/assets/Junaid_4.jpg",
         ],
     },
     {
@@ -138,9 +138,9 @@ export const founders: Founder[] = [
         bio: "Md Naved leads the creative vision of the agency, bringing ideas to life through distinctive visual identities, thoughtful design, and creative campaigns that give brands a voice people remember.",
         stats: [["3+", "Years"], ["30+", "Campaigns"], ["5M+", "Reach"]],
         images: [
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1400&q=90",
-            "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1400&q=90",
-            "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1400&q=90",
+            "/assets/Naved_3.jpeg",
+            "/assets/Naved_2.jpeg",
+            "/assets/Naved_1.jpeg",
         ],
     }
 ];
