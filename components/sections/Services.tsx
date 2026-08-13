@@ -35,7 +35,7 @@ export default function Services() {
                 <ScrollReveal duration={0.8}>
                     <div className="flex flex-col gap-4 border-b border-brand-secondary/10 pb-10">
                         <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-secondary">
-                            What We Do
+                            What We <em className="font-serif font-normal text-brand-tertiary italic">Do?</em>
                         </h2>
                         <p className="font-sans text-brand-neutral text-sm md:text-lg">
                             Tailored creative capabilities to help your brand stand out.

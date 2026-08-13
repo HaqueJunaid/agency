@@ -134,7 +134,7 @@ h1, h2, h3, h4, h6, p, div, section, span {
   }
   ::selection {
     background-color: var(--color-brand-primary);
-    color: var(--color-brand-secondary);
+    color: var(--color-brand-tertiary);
   }
   body {
     @apply bg-background text-foreground;

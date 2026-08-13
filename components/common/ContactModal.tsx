@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { useContact } from "@/context/ContactContext";
+import { ArrowUpIcon } from "lucide-react";
 
 const services = ["Paid Ads", "Branding", "Web Dev", "Strategy"];
 
@@ -67,27 +68,30 @@ export default function ContactModal() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 40 }}
                         transition={{ type: "spring", stiffness: 300, damping: 26 }}
-                        className="relative bg-[#0E0E0E] border border-white/5 rounded-2xl w-full max-w-4xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.8)] z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[520px]"
+                        className="relative bg-[#0E0E0E] border border-brand-secondary/5 rounded-2xl w-full max-w-4xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.8)] z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[520px]"
                     >
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(51,102,255,0.06),transparent_50%)] pointer-events-none" />
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.005)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.005)_1px,transparent_1px)] bg-size-[3rem_3rem] pointer-events-none" />
+                    <div 
+                        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.005)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.005)_1px,transparent_1px)] pointer-events-none" 
+                        style={{ backgroundSize: '3rem 3rem' }}
+                    />
 
                     <button
                         onClick={closeContact}
                         aria-label="Close"
-                        className="absolute top-6 right-6 w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/20 hover:scale-105 transition-all duration-200 cursor-pointer z-25"
+                        className="absolute top-6 right-6 w-9 h-9 rounded-full border border-brand-secondary/10 flex items-center justify-center text-brand-secondary/50 hover:text-brand-secondary hover:border-brand-secondary/20 hover:scale-105 transition-all duration-200 cursor-pointer z-25"
                     >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
 
-                    <div className="lg:col-span-5 bg-black/20 p-8 md:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden">
+                    <div className="hidden lg:col-span-5 bg-black/20 p-8 md:p-12 md:flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-brand-secondary/5 relative overflow-hidden">
                         <div className="flex flex-col gap-6 relative z-10">
                             <span className="font-mono text-[10px] text-brand-tertiary font-black tracking-[0.2em] uppercase">
                                 CONTACT US
                             </span>
-                            <h3 className="font-heading font-black text-3xl md:text-4xl text-white tracking-tight leading-tight">
+                            <h3 className="font-heading font-black text-3xl md:text-4xl text-brand-secondary tracking-tight leading-tight">
                                 Ready to scale your digital presence?
                             </h3>
                             <p className="text-brand-neutral text-sm leading-relaxed font-sans max-w-xs mt-2">
@@ -95,11 +99,11 @@ export default function ContactModal() {
                             </p>
                         </div>
 
-                        <div className="flex flex-col gap-6 mt-12 relative z-10 border-t border-white/5 pt-8">
+                        <div className="flex flex-col gap-6 mt-12 relative z-10 border-t border-brand-secondary/5 pt-8">
                             <div className="flex flex-col gap-1">
-                                <span className="font-mono text-[9px] text-white/35 tracking-widest uppercase">EMAIL DIRECT</span>
-                                <a href="mailto:hello@idealdesign.com" className="text-white hover:text-brand-tertiary font-sans text-sm md:text-base transition-colors duration-200">
-                                    hello@idealdesign.com
+                                <span className="font-mono text-[9px] text-brand-secondary/35 tracking-widest uppercase">EMAIL DIRECT</span>
+                                <a href="mailto:hello@idealdesign.com" className="text-brand-secondary hover:text-brand-tertiary font-sans text-sm md:text-base transition-colors duration-200">
+                                    idealdesign.studio12@gmail.com
                                 </a>
                             </div>
 
@@ -131,7 +135,7 @@ export default function ContactModal() {
                                         ), href: "#"
                                     }
                                 ].map((soc, idx) => (
-                                    <a key={idx} href={soc.href} className="w-8 h-8 rounded-full border border-white/5 bg-white/[0.01] hover:bg-white/5 hover:border-brand-tertiary hover:text-brand-tertiary transition-all duration-200 flex items-center justify-center text-white/60">
+                                    <a key={idx} href={soc.href} className="w-8 h-8 rounded-full border border-brand-secondary/10 bg-brand-secondary/1 hover:bg-brand-secondary/5  transition-all duration-200 flex items-center justify-center text-brand-secondary/60">
                                         {soc.label}
                                     </a>
                                 ))}
@@ -149,13 +153,14 @@ export default function ContactModal() {
                                     exit={{ opacity: 0, x: -15 }}
                                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                                 >
+                                    <h2 className="block md:hidden font-heading font-bold text-3xl md:text-4xl text-brand-secondary tracking-tight leading-tight w-[65%] mb-10">Tell us about your <span className="font-serif font-normal text-brand-tertiary italic">Idea</span>.</h2>
                                     <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:gap-7">
                                         <div className="flex flex-col gap-1 relative group">
                                             <input
                                                 type="text"
                                                 required
                                                 placeholder="Your Name"
-                                                className="bg-transparent border-b border-white/10 text-white placeholder-white/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -165,7 +170,7 @@ export default function ContactModal() {
                                                 type="email"
                                                 required
                                                 placeholder="Email Address"
-                                                className="bg-transparent border-b border-white/10 text-white placeholder-white/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -174,7 +179,7 @@ export default function ContactModal() {
                                             <input
                                                 type="tel"
                                                 placeholder="Contact Number"
-                                                className="bg-transparent border-b border-white/10 text-white placeholder-white/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -184,13 +189,13 @@ export default function ContactModal() {
                                                 required
                                                 rows={3}
                                                 placeholder="Tell us about your project"
-                                                className="bg-transparent border-b border-white/10 text-white placeholder-white/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans resize-none w-full"
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans resize-none w-full"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
 
                                         <div className="flex flex-col gap-3.5 mt-2">
-                                            <span className="font-mono text-[9px] text-white/35 tracking-widest uppercase font-bold">
+                                            <span className="font-mono text-[9px] text-brand-secondary/35 tracking-widest uppercase font-bold">
                                                 SERVICES INTERESTED IN
                                             </span>
                                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -199,10 +204,10 @@ export default function ContactModal() {
                                                         key={s}
                                                         type="button"
                                                         onClick={() => toggleService(s)}
-                                                        className={`py-2.5 px-3 border rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-200 cursor-pointer ${
+                                                        className={`py-2.5 px-3 border text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-200 cursor-pointer ${
                                                             selectedServices.includes(s)
-                                                                ? "bg-brand-tertiary border-brand-tertiary text-white shadow-lg shadow-brand-tertiary/20"
-                                                                : "bg-white/[0.01] border-white/5 text-brand-neutral hover:border-white/10 hover:text-white"
+                                                                ? "bg-brand-tertiary border-brand-tertiary text-brand-secondary shadow-lg shadow-brand-tertiary/20"
+                                                                : "bg-brand-secondary/1 border-brand-secondary/5 text-brand-neutral hover:border-brand-secondary/10 hover:text-brand-secondary"
                                                         }`}
                                                     >
                                                         {s}
@@ -213,15 +218,10 @@ export default function ContactModal() {
 
                                         <button
                                             type="submit"
-                                            className="group mt-6 w-full flex items-center justify-center gap-3 font-label font-bold text-xs tracking-[0.15em] uppercase text-brand-primary bg-white py-5 rounded-full hover:bg-brand-tertiary hover:text-white transition-all duration-300 shadow-lg cursor-pointer"
+                                            className="group mt-6 w-full flex items-center justify-center gap-3 font-label font-bold text-xs tracking-[0.15em] uppercase text-brand-primary bg-brand-secondary py-5  hover:bg-brand-tertiary hover:text-brand-secondary transition-all duration-300 shadow-lg cursor-pointer"
                                         >
                                             Send Message
-                                            <svg
-                                                className="w-3.5 h-3.5 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
-                                                viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"
-                                            >
-                                                <path d="M1 11L11 1M11 1H4M11 1V8" />
-                                            </svg>
+                                            <ArrowUpIcon className="size-6 rotate-90 group-hover:translate-x-2 transition-transform duration-300" />
                                         </button>
                                     </form>
                                 </motion.div>
@@ -234,7 +234,7 @@ export default function ContactModal() {
                                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                                     className="flex flex-col items-center text-center py-10"
                                 >
-                                    <div className="w-16 h-16 rounded-full bg-brand-tertiary/10 border border-brand-tertiary/20 flex items-center justify-center mb-6">
+                                    <div className="w-16 h-16  bg-brand-tertiary/10 border border-brand-tertiary/20 flex items-center justify-center mb-6">
                                         <svg
                                             className="w-6 h-6 text-brand-tertiary animate-bounce"
                                             fill="none"
@@ -245,7 +245,7 @@ export default function ContactModal() {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
-                                    <h3 className="font-heading font-black text-2xl text-white tracking-tight">
+                                    <h3 className="font-heading font-black text-2xl text-brand-secondary tracking-tight">
                                         Thank you!
                                     </h3>
                                     <p className="text-brand-neutral text-sm font-sans mt-3 max-w-xs leading-relaxed">

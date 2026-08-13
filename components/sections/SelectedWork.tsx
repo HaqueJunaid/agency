@@ -41,7 +41,7 @@ export default function SelectedWork() {
                     <div className="flex items-end justify-between border-b border-brand-primary/10 pb-10">
                         <div className="flex flex-col gap-4">
                             <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-primary">
-                                Selected Work
+                                Selected <span className="font-serif italic font-normal text-brand-tertiary">Work.</span>
                             </h2>
                             <p className="font-sans text-brand-neutral text-sm md:text-lg">
                                 Ideas designed to move brands forward.

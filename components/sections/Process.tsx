@@ -38,7 +38,7 @@ export default function Process() {
                         <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl tracking-tight text-brand-primary leading-tight">
                             A Blueprint <br />
                             For High-Impact <br />
-                            <em className="font-serif font-normal text-brand-neutral italic">Growth.</em>
+                            <em className="font-serif font-normal text-brand-tertiary italic">Growth.</em>
                         </h2>
 
                         <p className="max-w-md text-brand-neutral text-sm md:text-base leading-relaxed font-sans mt-2">

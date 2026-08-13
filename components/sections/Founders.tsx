@@ -36,7 +36,7 @@ export default function Founders() {
 
                             <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-primary max-w-190">
                                 Two minds.<br />
-                                One <em className="font-serif font-normal text-brand-neutral italic">obsession.</em>
+                                One <em className="font-serif font-normal text-brand-tertiary italic">obsession.</em>
                             </h2>
                         </div>
 

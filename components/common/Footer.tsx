@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useContact } from "@/context/ContactContext";
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowUpIcon, AtSign } from "lucide-react";
 
 export default function Footer() {
     const { openContact } = useContact();
@@ -17,7 +17,10 @@ export default function Footer() {
         <footer className="relative md:sticky md:bottom-0 md:z-0 w-full md:h-155 bg-[#090909] text-brand-secondary overflow-hidden flex flex-col justify-between py-12 px-6 lg:px-16 border-t border-white/5">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(51,102,255,0.07),transparent_60%)] pointer-events-none" />
 
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-size-[4rem_4rem] pointer-events-none" />
+            <div 
+                className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] pointer-events-none" 
+                style={{ backgroundSize: '4rem 4rem' }}
+            />
 
             <div className="absolute top-0 inset-x-0 h-14 bg-brand-tertiary flex items-center overflow-hidden z-10 select-none">
                 <motion.div
@@ -31,7 +34,7 @@ export default function Footer() {
             </div>
 
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-transparent text-[22vw] font-heading font-black tracking-tighter select-none pointer-events-none leading-none z-0"
-                 style={{ WebkitTextStroke: "1px rgba(255,255,255,0.01)" }}>
+                style={{ WebkitTextStroke: "1px rgba(255,255,255,0.01)" }}>
                 IDEAL
             </div>
 
@@ -72,21 +75,22 @@ export default function Footer() {
                 </div>
             </div>
 
-            <div className="relative z-10 w-full border-t border-white/5 pt-8 flex flex-col md:flex-row gap-6 justify-between items-center text-brand-neutral text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase font-label">
+            <div className="relative z-10 w-full border-t border-white/5 pt-8 flex flex-col md:flex-row gap-6 justify-between items-center text-brand-secondary/50 text-[10px] md:text-xs font-normal tracking-[0.2em] uppercase font-label">
                 <div>
                     &copy; 2026 IDEAL DESIGN. ALL RIGHTS RESERVED.
                 </div>
 
-                <div className="text-white/80 font-mono tracking-widest text-[9px] md:text-[10px] lowercase">
-                    creative direction &amp; development studio
+                <div className="text-brand-secondary/50 font-label tracking-widest text-[9px] md:text-[10px] lowercase flex items-center justify-center gap-1.5">
+                    <AtSign className="size-4" />
+                    idealdesign.studio12@gmail.com
                 </div>
 
                 <button
                     onClick={scrollToTop}
                     aria-label="Back to Top"
-                    className="w-10 h-10  border border-white/10 hover:border-white/30 flex items-center justify-center text-white cursor-pointer hover:bg-white/5 hover:scale-105 transition-all duration-200"
+                    className="w-10 h-10 rounded-full border border-brand-secondary/10 hover:bg-brand-secondary hover:border-brand-secondary/30 flex items-center justify-center text-white cursor-pointer hover:scale-150 transition-all duration-200 group"
                 >
-                    <ArrowUpIcon />
+                    <ArrowUpIcon className="transition-transform duration-300 group-hover:text-brand-primary" />
                 </button>
             </div>
         </footer>

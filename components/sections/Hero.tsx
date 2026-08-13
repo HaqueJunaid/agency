@@ -1,4 +1,5 @@
 import ScrollReveal from "@/components/common/ScrollReveal";
+import StartProjectButton from "../common/StartProjectButton";
 
 const Hero = () => {
     return (
@@ -8,7 +9,7 @@ const Hero = () => {
                     <div className="flex items-center gap-4">
                         <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-brand-neutral opacity-60"></div>
                         <p className="font-label text-[10px] lg:text-sm font-bold tracking-[0.2em] text-brand-neutral uppercase">
-                            Available for selected projects &mdash; 2026
+                            CREATIVE EXPERIENCE STUDIO
                         </p>
                     </div>
 
@@ -25,9 +26,7 @@ const Hero = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                            <button className="px-12 py-6 bg-brand-primary text-brand-secondary font-label text-xs font-bold tracking-widest hover:bg-brand-tertiary transition-colors duration-300">
-                                START A PROJECT
-                            </button>
+                            <StartProjectButton />
                             <button className="px-12 py-6 bg-transparent text-brand-primary font-label text-xs font-bold tracking-widest border border-brand-primary hover:bg-brand-primary hover:text-brand-secondary transition-colors duration-300">
                                 VIEW OUR WORK
                             </button>
