@@ -22,6 +22,7 @@ export default function ContactModal() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
         return () => setMounted(false);
     }, []);
@@ -31,11 +32,12 @@ export default function ContactModal() {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsSubmitted(false);
         }
     }, [isContactOpen]);
 
-    if (!mounted || !isContactOpen) return null;
+    if (!mounted) return null;
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,22 +49,26 @@ export default function ContactModal() {
 
     return createPortal(
         <AnimatePresence>
-            <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-8">
+            {isContactOpen && (
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={closeContact}
-                    className="absolute inset-0 bg-brand-primary/25 backdrop-blur-lg"
-                />
-
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.96, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, y: 20 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 26 }}
-                    className="relative bg-[#0E0E0E] border border-white/5 rounded-2xl w-full max-w-4xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.8)] z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[520px]"
+                    key="contact-modal"
+                    className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-8"
                 >
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={closeContact}
+                        className="absolute inset-0 bg-brand-primary/25 backdrop-blur-lg"
+                    />
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.96, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 40 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 26 }}
+                        className="relative bg-[#0E0E0E] border border-white/5 rounded-2xl w-full max-w-4xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.8)] z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[520px]"
+                    >
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(51,102,255,0.06),transparent_50%)] pointer-events-none" />
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.005)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.005)_1px,transparent_1px)] bg-size-[3rem_3rem] pointer-events-none" />
 
@@ -250,7 +256,8 @@ export default function ContactModal() {
                         </AnimatePresence>
                     </div>
                 </motion.div>
-            </div>
+                </motion.div>
+            )}
         </AnimatePresence>,
         document.body
     );

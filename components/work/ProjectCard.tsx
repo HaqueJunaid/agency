@@ -22,7 +22,7 @@ export default function ProjectCard({ project, isMobile }: { project: Project; i
         >
             <div className={`w-full ${project.aspectClass} overflow-hidden border border-brand-primary/10 bg-zinc-100 relative`}>
                 <div className="w-full h-8 border-b border-brand-primary/10 flex items-center justify-between px-4 bg-brand-secondary/40 backdrop-blur-sm z-10 absolute top-0 left-0">
-                    <span className="font-mono text-[9px] text-brand-neutral font-bold tracking-widest">{project.title.toUpperCase()} // LABS</span>
+                    <span className="font-mono text-[9px] text-brand-neutral font-bold tracking-widest">{`${project.title.toUpperCase()} // LABS`}</span>
                     <div className="w-1.5 h-1.5 rounded-full bg-brand-neutral/30" />
                 </div>
 
