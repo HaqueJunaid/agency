@@ -9,12 +9,12 @@ const Hero = () => {
                     </p>
                 </div>
 
-                <h1 className="text-7xl md:text-8xl lg:text-[10rem] font-heading font-black text-brand-primary leading-[1.05] tracking-tight">
+                <h1 className="text-7xl md:text-8xl lg:text-[9rem] font-heading font-black text-brand-primary leading-[1.05] tracking-tight">
                     We Make Brands <br />
                     <span className="font-serif italic font-medium text-brand-tertiary pr-2">Impossible</span> to Ignore.
                 </h1>
                 <div className="flex flex-col md:flex-row justify-between items-start gap-12 pt-6 md:pt-12">
-                    <p className="font-sans text-md md:text-lg lg:text-2xl text-brand-neutral md:max-w-2xl leading-relaxed">
+                    <p className="font-sans text-md md:text-lg lg:text-xl text-brand-neutral md:max-w-2xl leading-relaxed">
                         Ideal Design creates bold social campaigns, digital experiences, and websites that turn attention into meaningful growth.
                     </p>
 

@@ -10,7 +10,6 @@ export default function MouseFollower() {
     const [cursorText, setCursorText] = useState("");
     const [isVisible, setIsVisible] = useState(false);
 
-    // Dynamic configuration for trailing lag effect
     const springConfig = { damping: 30, stiffness: 350, mass: 0.5 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
@@ -39,7 +38,7 @@ export default function MouseFollower() {
         const handleMouseEnter = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target) return;
-            
+
             const elementWithText = target.closest("[data-cursor-text]");
             const isClickable = target.closest("a, button, [role='button']") !== null;
 
@@ -58,7 +57,6 @@ export default function MouseFollower() {
             setCursorText("");
         };
 
-        // Capture phase listeners to handle pointer hovers globally
         document.addEventListener("mouseover", handleMouseEnter, true);
         document.addEventListener("mouseout", handleMouseLeave, true);
 
@@ -70,29 +68,28 @@ export default function MouseFollower() {
 
     if (!isVisible) return null;
 
-    const size = cursorType === "text" ? 80 : cursorType === "pointer" ? 50 : 16;
+    const size = cursorType === "text" ? 150 : cursorType === "pointer" ? 50 : 16;
 
     return (
         <motion.div
-            className="hidden fixed top-0 left-0 rounded-full pointer-events-none z-9999 lg:flex items-center justify-center border border-brand-primary bg-transparent text-brand-secondary text-[10px] font-label font-bold tracking-widest uppercase overflow-hidden"
+            className="hidden fixed top-0 left-0 rounded-full pointer-events-none z-9999 lg:flex items-center justify-center overflow-hidden"
             style={{
                 x: cursorXSpring,
                 y: cursorYSpring,
                 translateX: "-50%",
                 translateY: "-50%",
+                mixBlendMode: "difference",
+                backgroundColor: "white",
             }}
-            animate={{
-                width: size,
-                height: size,
-                backgroundColor: cursorType === "text" ? "var(--color-brand-primary)" : "rgba(var(--color-brand-primary), 0)",
-            }}
+            animate={{ width: size, height: size }}
             transition={{ type: "spring", stiffness: 350, damping: 22, mass: 0.5 }}
         >
             {cursorType === "text" && (
-                <motion.span 
+                <motion.span
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-brand-secondary text-center px-2 select-none"
+                    style={{ mixBlendMode: "difference", color: "white" }}
+                    className="text-center px-3 select-none text-[9px] leading-tight line-clamp-2 max-w-30 font-label font-bold tracking-widest uppercase"
                 >
                     {cursorText}
                 </motion.span>

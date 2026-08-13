@@ -1,96 +1,142 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { navLinks } from "@/constants";
 import type { NavbarProps } from "@/constants";
-import { Button } from "../ui/button";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import { usePathname } from "next/navigation";
+import AnimatedNavLink from "@/components/navbar/AnimatedNavLink";
 
 const menuVariants: Variants = {
-    initial: { y: "-100%" },
-    animate: { y: "0%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } },
-    exit: { y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
+    initial: { clipPath: "inset(0 0 100% 0)" },
+    animate: { clipPath: "inset(0 0 0% 0)", transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] } },
+    exit: { clipPath: "inset(0 0 100% 0)", transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] } },
 };
 
 const linkContainerVariants: Variants = {
-    animate: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
-    exit: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+    animate: { transition: { staggerChildren: 0.08, delayChildren: 0.35 } },
+    exit: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
 };
 
 const linkVariants: Variants = {
-    initial: { y: "100%", opacity: 0, rotate: 5 },
-    animate: { y: "0%", opacity: 1, rotate: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } },
-    exit: { y: "100%", opacity: 0, rotate: 5, transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } }
+    initial: { y: "105%", opacity: 0 },
+    animate: { y: "0%", opacity: 1, transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] } },
+    exit: { y: "105%", opacity: 0, transition: { duration: 0.45, ease: [0.76, 0, 0.24, 1] } },
 };
 
-const bottomVariants: Variants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.6, ease: [0.76, 0, 0.24, 1] } },
-    exit: { opacity: 0, y: 20, transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] } }
+const footerVariants: Variants = {
+    initial: { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    exit: { opacity: 0, y: 16, transition: { duration: 0.3 } },
 };
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
 
-    useEffect(() => {
-        setIsOpen(false);
-    }, [pathname]);
+    useEffect(() => { setIsOpen(false); }, [pathname]);
 
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
+        document.body.style.overflow = isOpen ? "hidden" : "auto";
     }, [isOpen]);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 24);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
+    const navBg = isOpen
+        ? "bg-brand-primary"
+        : scrolled
+            ? "bg-brand-secondary/90 backdrop-blur-md border-b border-brand-primary/8"
+            : "bg-brand-secondary border-b border-brand-primary/8";
 
     return (
         <>
-            <nav className={`px-6 md:px-16 py-5 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-colors duration-300 ${isOpen ? 'bg-transparent' : 'bg-brand-secondary'}`}>
+            <nav className={`px-6 md:px-12 lg:px-16 h-17 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-all duration-500 ${navBg}`}>
+
                 <Link
                     href="/"
-                    className="font-heading font-black text-2xl md:text-5xl z-50 transition-colors duration-300"
-                    style={{ color: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
+                    className="relative z-50 flex items-baseline gap-0 select-none"
+                    style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                 >
-                    IDEAL DESIGN
+                    <span className="font-heading font-black text-xl md:text-2xl tracking-tight leading-none">
+                        IDEAL
+                    </span>
+                    <span
+                        className="font-serif italic font-medium text-brand-tertiary text-xl md:text-2xl leading-none px-1.5"
+                        style={{ color: isOpen ? "var(--color-brand-tertiary)" : undefined }}
+                    >
+                        Design
+                    </span>
+                    <span
+                        className="font-heading font-black text-xl md:text-2xl tracking-tight leading-none"
+                        style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
+                    >
+                        .
+                    </span>
                 </Link>
 
-                <ul className="hidden md:flex items-center justify-center gap-8">
+                <ul className="hidden md:flex items-center gap-7 lg:gap-10 absolute left-1/2 -translate-x-1/2">
                     {navLinks.map(({ label, link }: NavbarProps) => (
                         <li key={label}>
-                            <Link href={link} className="font-mono font-bold text-sm text-brand-primary hover:text-brand-tertiary cursor-pointer transition-all ease-in-out duration-150">
-                                {label}
-                            </Link>
+                            <AnimatedNavLink label={label} link={link} />
                         </li>
                     ))}
                 </ul>
-                <div className="hidden md:block">
-                    <Button className={'font-label font-light px-7 py-5 rounded-none bg-brand-primary text-brand-secondary text-xs cursor-pointer hover:bg-brand-tertiary duration-150 transition-all ease-in-out'}>
-                        LET'S TALK
-                    </Button>
+
+                <div className="hidden md:flex items-center gap-5">
+                    <span className="flex items-center gap-2 font-label text-[10px] tracking-[.16em] text-brand-neutral uppercase">
+                        <span className="relative flex h-1.5 w-1.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                        </span>
+                        Available
+                    </span>
+
+                    <div className="w-px h-4 bg-brand-primary/15" />
+
+                    <Link
+                        href="#contact"
+                        className="group flex items-center gap-2 font-label font-bold text-[11px] tracking-[.14em] uppercase text-brand-primary
+                                   border border-brand-primary/20 px-5 py-2.5 hover:bg-brand-primary hover:text-brand-secondary hover:border-brand-primary
+                                   transition-all duration-300"
+                    >
+                        Let&apos;s Talk
+                        <svg
+                            className="w-3 h-3 -rotate-45 group-hover:rotate-0 transition-transform duration-300"
+                            viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5"
+                        >
+                            <path d="M1 11L11 1M11 1H4M11 1V8" />
+                        </svg>
+                    </Link>
                 </div>
 
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden z-50 flex flex-col justify-center items-center w-10 h-10 gap-1.5 focus:outline-none"
+                    className="md:hidden relative z-50 flex flex-col justify-center items-end gap-1.25 w-10 h-10 focus:outline-none"
                     aria-label="Toggle Menu"
                 >
                     <motion.span
-                        animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                        className="w-8 h-0.5 block transition-colors duration-300"
-                        style={{ backgroundColor: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
+                        animate={isOpen ? { rotate: 45, y: 7, width: "100%" } : { rotate: 0, y: 0, width: "100%" }}
+                        transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                        className="h-[1.5px] block origin-center"
+                        style={{ backgroundColor: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                     />
                     <motion.span
-                        animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                        className="w-8 h-0.5 block transition-colors duration-300"
-                        style={{ backgroundColor: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
+                        animate={isOpen ? { opacity: 0, x: -8 } : { opacity: 1, x: 0, width: "65%" }}
+                        transition={{ duration: 0.25 }}
+                        className="h-[1.5px] block"
+                        style={{ backgroundColor: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)", width: "65%" }}
                     />
                     <motion.span
-                        animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                        className="w-8 h-0.5 block transition-colors duration-300"
-                        style={{ backgroundColor: isOpen ? 'var(--color-brand-secondary)' : 'var(--color-brand-primary)' }}
+                        animate={isOpen ? { rotate: -45, y: -7, width: "100%" } : { rotate: 0, y: 0, width: "80%" }}
+                        transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                        className="h-[1.5px] block origin-center"
+                        style={{ backgroundColor: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)", width: "80%" }}
                     />
                 </button>
             </nav>
@@ -102,50 +148,83 @@ const Navbar = () => {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="fixed inset-0 z-40 bg-brand-primary w-full h-screen flex flex-col justify-between px-6 pt-32 pb-12 overflow-hidden"
+                        className="fixed inset-0 z-40 bg-brand-primary flex flex-col justify-between px-6 pt-28 pb-10 overflow-hidden"
                     >
                         <motion.ul
                             variants={linkContainerVariants}
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            className="flex flex-col gap-4 mt-8"
+                            className="flex flex-col"
                         >
                             {navLinks.map(({ label, link }: NavbarProps, i) => (
-                                <div key={label} className="overflow-hidden mb-3">
-                                    <motion.li variants={linkVariants}>
+                                <div key={label} className="overflow-hidden border-b border-brand-secondary/8 py-6">
+                                    <motion.li variants={linkVariants} className="flex items-baseline justify-between">
                                         <Link
                                             href={link}
                                             onClick={() => setIsOpen(false)}
-                                            className="font-heading font-black text-5xl sm:text-7xl text-brand-secondary hover:text-brand-tertiary transition-colors inline-block"
+                                            className="font-heading font-black text-[13vw] sm:text-7xl text-brand-secondary
+                                                       hover:text-brand-tertiary transition-colors duration-300 inline-block leading-[1.1]"
                                         >
                                             {label}
                                         </Link>
+                                        <span className="font-label text-brand-secondary/25 text-[10px] tracking-widest">
+                                            {String(i + 1).padStart(2, "0")}
+                                        </span>
                                     </motion.li>
                                 </div>
                             ))}
                         </motion.ul>
 
                         <motion.div
-                            variants={bottomVariants}
+                            variants={footerVariants}
                             initial="initial"
                             animate="animate"
                             exit="exit"
                             className="flex flex-col gap-6"
                         >
-                            <hr className="border-brand-secondary/20" />
+                            <div className="h-px w-full bg-brand-secondary/10" />
                             <div className="flex justify-between items-end">
-                                <div className="flex flex-col gap-2">
-                                    <p className="font-label text-brand-secondary/60 text-xs tracking-widest">SAY HELLO</p>
-                                    <a href="mailto:hello@idealdesign.com" className="font-sans text-brand-secondary underline underline-offset-4">hello@idealdesign.com</a>
+                                <div className="flex flex-col gap-1.5">
+                                    <p className="font-label text-brand-secondary/40 text-[9px] tracking-[.2em] uppercase">Get in touch</p>
+                                    <a
+                                        href="mailto:hello@idealdesign.com"
+                                        className="font-sans text-sm text-brand-secondary hover:text-brand-tertiary transition-colors duration-200"
+                                    >
+                                        hello@idealdesign.com
+                                    </a>
                                 </div>
-                                <ul className="flex gap-4">
-                                    {['X', 'IG', 'IN'].map(social => (
-                                        <li key={social}>
-                                            <a href="#" className="font-label text-xs tracking-widest text-brand-secondary hover:text-brand-tertiary transition-colors">{social}</a>
-                                        </li>
+                                <div className="flex items-center gap-4">
+                                    {[
+                                        {
+                                            label: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                                <circle cx="12" cy="12" r="4" />
+                                                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+                                            </svg>, href: "#"
+                                        },
+                                        {
+                                            label: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                                            </svg>, href: "#"
+                                        },
+                                        {
+                                            label: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                                <rect x="2" y="9" width="4" height="12" />
+                                                <circle cx="4" cy="4" r="2" />
+                                            </svg>, href: "#"
+                                        },
+                                    ].map(({ label, href }) => (
+                                        <a
+                                            key={href}
+                                            href={href}
+                                            className="font-label text-[9px] tracking-[.18em] text-brand-secondary/50 hover:text-brand-tertiary transition-colors duration-200 uppercase"
+                                        >
+                                            {label}
+                                        </a>
                                     ))}
-                                </ul>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>

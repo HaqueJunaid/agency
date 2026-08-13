@@ -28,7 +28,7 @@ export default function Services() {
             id="services"
             onMouseMove={handleMouseMove}
             onMouseLeave={() => setHoveredIndex(null)}
-            className="relative w-full py-24 px-6 lg:px-16 bg-brand-primary text-brand-secondary overflow-hidden"
+            className="relative w-full py-24 px-6 lg:px-16 bg-brand-primary text-brand-secondary overflow-hidden cursor-none"
         >
             <div className="w-full mx-auto flex flex-col relative z-10">
                 <div className="flex flex-col gap-4 border-b border-brand-secondary/10 pb-10">
@@ -45,7 +45,8 @@ export default function Services() {
                             key={service.id}
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
-                            className="group relative w-full border-b border-brand-secondary/10 py-10 md:py-12 flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center cursor-pointer transition-all duration-300"
+                            data-cursor-text={service.title}
+                            className="group relative w-full border-b border-brand-secondary/10 py-10 md:py-12 flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center cursor-none transition-all duration-300"
                         >
                             <div className="font-heading font-black text-4xl md:text-5xl lg:text-7xl text-brand-tertiary md:text-brand-secondary/20 group-hover:text-brand-tertiary transition-colors duration-300 min-w-20">
                                 {service.id}

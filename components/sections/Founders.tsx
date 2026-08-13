@@ -1,0 +1,73 @@
+"use client";
+
+import { useState, useRef, useCallback } from "react";
+import { founders } from "@/constants";
+import FounderCard from "@/components/founders/FounderCard";
+import FounderModal from "@/components/founders/FounderModal";
+
+export default function Founders() {
+    const [activeModal, setActiveModal] = useState<{ index: number; rect: DOMRect } | null>(null);
+    const cardRefs = useRef<(HTMLElement | null)[]>([]);
+
+    const handleOpen = useCallback((index: number, rect: DOMRect) => {
+        setActiveModal({ index, rect });
+    }, []);
+
+    const handleClose = useCallback(() => {
+        setActiveModal(null);
+    }, []);
+
+    return (
+        <>
+            <section
+                id="founders"
+                className="relative w-full min-h-screen py-[clamp(70px,10vw,140px)] px-6 lg:px-16 bg-transparent text-brand-secondary overflow-hidden"
+            >
+                {/* ── Header ── */}
+                <header className="flex flex-col md:flex-row md:justify-between md:items-end gap-10 mb-17.5">
+                    <div>
+                        {/* Eyebrow */}
+                        <div className="flex items-center gap-2.5 mb-4.5 text-brand-tertiary text-[11px] font-bold tracking-[.18em] uppercase font-label">
+                            <span className="w-7.5 h-px bg-brand-tertiary" />
+                            The people behind the work
+                        </div>
+
+                        <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-primary max-w-190">
+                            Two minds.<br />
+                            One <em className="font-serif font-normal text-brand-neutral italic">obsession.</em>
+                        </h2>
+                    </div>
+
+                    <p className="max-w-82.5 text-brand-neutral text-sm leading-[1.7] font-sans">
+                        Strategy and creativity come together through the two people who built the agency from the ground up.
+                    </p>
+                </header>
+
+                {/* ── Cards ── */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 max-w-362.5 mx-auto">
+                    {founders.map((founder, i) => (
+                        <FounderCard
+                            key={founder.name}
+                            founder={founder}
+                            index={i}
+                            total={founders.length}
+                            onOpen={handleOpen}
+                            hidden={activeModal?.index === i}
+                        />
+                    ))}
+                </div>
+            </section>
+
+            {/* ── Modal (portal) ── */}
+            {activeModal !== null && (
+                <FounderModal
+                    founder={founders[activeModal.index]}
+                    founderIndex={activeModal.index}
+                    total={founders.length}
+                    originRect={activeModal.rect}
+                    onClose={handleClose}
+                />
+            )}
+        </>
+    );
+}
