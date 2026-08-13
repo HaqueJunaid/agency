@@ -33,20 +33,108 @@ const footerVariants: Variants = {
     exit: { opacity: 0, y: 16, transition: { duration: 0.3 } },
 };
 
+const PixelDot = ({ trigger }: { trigger: boolean }) => {
+    return (
+        <span className="relative w-2 h-2 ml-1 mb-1.5 self-end inline-block">
+            {/* The main pixel dot */}
+            <motion.span
+                className="absolute inset-0 bg-brand-tertiary"
+                animate={trigger ? { rotate: 45, scale: 1.1 } : { rotate: 0, scale: 1 }}
+                transition={{ duration: 0.3 }}
+            />
+            {/* Particle pixels that float up */}
+            <AnimatePresence>
+                {trigger && (
+                    <>
+                        <motion.span
+                            initial={{ x: 0, y: 0, opacity: 0 }}
+                            animate={{ 
+                                x: [0, 5, 8], 
+                                y: [0, -10, -20], 
+                                opacity: [0, 1, 0], 
+                                scale: [1, 0.8, 0.4] 
+                            }}
+                            transition={{ 
+                                duration: 0.8, 
+                                repeat: Infinity, 
+                                ease: "easeOut",
+                                delay: 0 
+                            }}
+                            className="absolute inset-0 bg-brand-tertiary"
+                        />
+                        <motion.span
+                            initial={{ x: 0, y: 0, opacity: 0 }}
+                            animate={{ 
+                                x: [0, -6, -10], 
+                                y: [0, -14, -26], 
+                                opacity: [0, 1, 0], 
+                                scale: [1, 0.8, 0.4] 
+                            }}
+                            transition={{ 
+                                duration: 0.9, 
+                                repeat: Infinity, 
+                                ease: "easeOut",
+                                delay: 0.25 
+                            }}
+                            className="absolute inset-0 bg-brand-tertiary"
+                        />
+                        <motion.span
+                            initial={{ x: 0, y: 0, opacity: 0 }}
+                            animate={{ 
+                                x: [0, 2, 3], 
+                                y: [0, -18, -30], 
+                                opacity: [0, 1, 0], 
+                                scale: [1, 0.8, 0.4] 
+                            }}
+                            transition={{ 
+                                duration: 1.0, 
+                                repeat: Infinity, 
+                                ease: "easeOut",
+                                delay: 0.5 
+                            }}
+                            className="absolute inset-0 bg-brand-tertiary"
+                        />
+                    </>
+                )}
+            </AnimatePresence>
+        </span>
+    );
+};
+
 const Navbar = () => {
     const { openContact } = useContact();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [logoHovered, setLogoHovered] = useState(false);
+    const lastScrollY = useRef(0);
     const pathname = usePathname();
 
-    useEffect(() => { setIsOpen(false); }, [pathname]);
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsOpen(false);
+    }, [pathname]);
 
     useEffect(() => {
         document.body.style.overflow = isOpen ? "hidden" : "auto";
     }, [isOpen]);
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 24);
+        const onScroll = () => {
+            const currentScrollY = window.scrollY;
+            setScrolled(currentScrollY > 24);
+
+            if (currentScrollY <= 50) {
+                setIsVisible(true);
+            } else if (currentScrollY > lastScrollY.current) {
+                setIsVisible(false);
+            } else {
+                setIsVisible(true);
+            }
+
+            lastScrollY.current = currentScrollY;
+        };
+
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
@@ -59,29 +147,32 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className={`px-6 md:px-12 lg:px-16 h-17 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-all duration-500 ${navBg}`}>
+            <nav className={`px-6 md:px-12 lg:px-16 h-17 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-all duration-500 ${
+                (isVisible || isOpen) ? "translate-y-0" : "-translate-y-full"
+            } ${navBg}`}>
 
-                <Link
-                    href="/"
-                    className="relative z-50 flex items-baseline gap-0 select-none"
-                    style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
+                <motion.div
+                    className="relative z-50 flex items-baseline gap-0 select-none cursor-pointer"
+                    onMouseEnter={() => setLogoHovered(true)}
+                    onMouseLeave={() => setLogoHovered(false)}
                 >
-                    <span className="font-heading font-black text-2xl md:text-2xl tracking-tight leading-none">
-                        IDEAL
-                    </span>
-                    <span
-                        className="font-serif italic font-medium text-brand-tertiary text-2xl md:text-2xl leading-none px-1.5"
-                        style={{ color: isOpen ? "var(--color-brand-tertiary)" : undefined }}
-                    >
-                        Design
-                    </span>
-                    <span
-                        className="font-heading font-black text-2xl md:text-2xl tracking-tight leading-none"
+                    <Link
+                        href="/"
+                        className="flex items-baseline gap-0"
                         style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                     >
-                        .
-                    </span>
-                </Link>
+                        <span className="font-heading font-black text-2xl md:text-2xl tracking-tight leading-none">
+                            IDEAL
+                        </span>
+                        <span
+                            className="font-serif italic font-medium text-brand-tertiary text-2xl md:text-2xl leading-none px-1.5"
+                            style={{ color: isOpen ? "var(--color-brand-tertiary)" : undefined }}
+                        >
+                            Design
+                        </span>
+                        <PixelDot trigger={logoHovered} />
+                    </Link>
+                </motion.div>
 
                 <ul className="hidden md:flex items-center gap-7 lg:gap-10 absolute left-1/2 -translate-x-1/2">
                     {navLinks.map(({ label, link }: NavbarProps) => (
