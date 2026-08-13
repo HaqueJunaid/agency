@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import type { Project } from "@/constants/index";
+import ScrollReveal from "@/components/common/ScrollReveal";
 
 export default function ProjectCard({ project, isMobile }: { project: Project; isMobile: boolean }) {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -15,11 +16,12 @@ export default function ProjectCard({ project, isMobile }: { project: Project; i
     const springY = useSpring(y, { stiffness: 100, damping: 30, mass: 0.5 });
 
     return (
-        <div
-            ref={cardRef}
-            className="group flex flex-col gap-6 cursor-pointer"
-            data-cursor-text="VIEW"
-        >
+        <ScrollReveal duration={0.9} y={40}>
+            <div
+                ref={cardRef}
+                className="group flex flex-col gap-6 cursor-pointer"
+                data-cursor-text="VIEW"
+            >
             <div className={`w-full ${project.aspectClass} overflow-hidden border border-brand-primary/10 bg-zinc-100 relative`}>
                 <div className="w-full h-8 border-b border-brand-primary/10 flex items-center justify-between px-4 bg-brand-secondary/40 backdrop-blur-sm z-10 absolute top-0 left-0">
                     <span className="font-mono text-[9px] text-brand-neutral font-bold tracking-widest">{`${project.title.toUpperCase()} // LABS`}</span>
@@ -51,6 +53,7 @@ export default function ProjectCard({ project, isMobile }: { project: Project; i
                     {project.subtitle}
                 </p>
             </div>
-        </div>
+            </div>
+        </ScrollReveal>
     );
 }

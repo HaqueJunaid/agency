@@ -174,7 +174,7 @@ const Navbar = () => {
                     </Link>
                 </motion.div>
 
-                <ul className="hidden md:flex items-center gap-7 lg:gap-10 absolute left-1/2 -translate-x-1/2">
+                <ul className="hidden md:flex items-center gap-7 lg:gap-8 absolute left-1/2 -translate-x-1/2">
                     {navLinks.map(({ label, link }: NavbarProps) => (
                         <li key={label}>
                             <AnimatedNavLink

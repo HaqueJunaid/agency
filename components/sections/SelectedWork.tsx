@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Link from "next/link";
 import { projectsCol1, projectsCol2 } from "@/constants/index";
 import ProjectCard from "@/components/work/ProjectCard";
+import ScrollReveal from "@/components/common/ScrollReveal";
 
 export default function SelectedWork() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -36,22 +37,24 @@ export default function SelectedWork() {
             className="relative w-full py-24 md:py-36 px-6 lg:px-16 border-b-2 border-brand-primary bg-transparent overflow-hidden"
         >
             <div className="w-full mx-auto flex flex-col gap-20">
-                <div className="flex items-end justify-between border-b border-brand-primary/10 pb-10">
-                    <div className="flex flex-col gap-4">
-                        <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-primary">
-                            Selected Work
-                        </h2>
-                        <p className="font-sans text-brand-neutral text-sm md:text-lg">
-                            Ideas designed to move brands forward.
-                        </p>
+                <ScrollReveal duration={0.8}>
+                    <div className="flex items-end justify-between border-b border-brand-primary/10 pb-10">
+                        <div className="flex flex-col gap-4">
+                            <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-primary">
+                                Selected Work
+                            </h2>
+                            <p className="font-sans text-brand-neutral text-sm md:text-lg">
+                                Ideas designed to move brands forward.
+                            </p>
+                        </div>
+                        <Link
+                            href="/work"
+                            className="font-label font-bold text-xs md:text-sm tracking-widest text-brand-primary uppercase border-b border-brand-primary hover:text-brand-neutral hover:border-brand-neutral transition-all duration-350 pb-1"
+                        >
+                            VIEW ARCHIVE
+                        </Link>
                     </div>
-                    <Link
-                        href="/work"
-                        className="font-label font-bold text-xs md:text-sm tracking-widest text-brand-primary uppercase border-b border-brand-primary hover:text-brand-neutral hover:border-brand-neutral transition-all duration-350 pb-1"
-                    >
-                        VIEW ARCHIVE
-                    </Link>
-                </div>
+                </ScrollReveal>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 lg:gap-28 w-full items-start">
                     <motion.div style={{ y: isMobile ? 0 : smoothY1 }} className="flex flex-col gap-24 md:gap-36">

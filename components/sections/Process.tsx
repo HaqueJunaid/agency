@@ -5,6 +5,7 @@ import { motion, useScroll, useSpring } from "motion/react";
 import { processSteps } from "@/constants";
 import ProcessStepCard from "@/components/process/ProcessStepCard";
 import DeliveredLabel from "@/components/process/DeliveredLabel";
+import ScrollReveal from "@/components/common/ScrollReveal";
 
 export default function Process() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -27,22 +28,24 @@ export default function Process() {
             className="relative w-full py-24 md:py-36 px-6 lg:px-16 bg-transparent text-brand-primary"
         >
             <div className="w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-                <div className="lg:col-span-5 lg:sticky lg:top-32 flex flex-col gap-6">
-                    <div className="flex items-center gap-2.5 text-brand-tertiary text-[11px] font-bold tracking-[.18em] uppercase font-label">
-                        <span className="w-7.5 h-px bg-brand-tertiary" />
-                        Our Process
+                <ScrollReveal className="lg:col-span-5 lg:sticky lg:top-32" duration={0.8}>
+                    <div className="flex flex-col gap-6">
+                        <div className="flex items-center gap-2.5 text-brand-tertiary text-[11px] font-bold tracking-[.18em] uppercase font-label">
+                            <span className="w-7.5 h-px bg-brand-tertiary" />
+                            Our Process
+                        </div>
+
+                        <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl tracking-tight text-brand-primary leading-tight">
+                            A Blueprint <br />
+                            For High-Impact <br />
+                            <em className="font-serif font-normal text-brand-neutral italic">Growth.</em>
+                        </h2>
+
+                        <p className="max-w-md text-brand-neutral text-sm md:text-base leading-relaxed font-sans mt-2">
+                            We eliminate guesswork. We audit your infrastructure, engineer the campaign framework, generate hook variations, and aggressively scale what works.
+                        </p>
                     </div>
-
-                    <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl tracking-tight text-brand-primary leading-tight">
-                        A Blueprint <br />
-                        For High-Impact <br />
-                        <em className="font-serif font-normal text-brand-neutral italic">Growth.</em>
-                    </h2>
-
-                    <p className="max-w-md text-brand-neutral text-sm md:text-base leading-relaxed font-sans mt-2">
-                        We eliminate guesswork. We audit your infrastructure, engineer the campaign framework, generate hook variations, and aggressively scale what works.
-                    </p>
-                </div>
+                </ScrollReveal>
 
                 <div className="lg:col-span-7 relative pl-0">
                     <div className="absolute left-6 top-6 bottom-6 w-[2px] -translate-x-1/2 pointer-events-none">

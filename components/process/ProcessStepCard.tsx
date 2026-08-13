@@ -30,6 +30,12 @@ export default function ProcessStepCard({ step, index, total }: ProcessStepCardP
         [0.98, 1, 1, 0.98]
     );
 
+    const filter = useTransform(
+        scrollYProgress,
+        [0.15, 0.35, 0.6, 0.8],
+        ["blur(8px)", "blur(0px)", "blur(0px)", "blur(4px)"]
+    );
+
     const nodeBg = useTransform(
         scrollYProgress,
         [0.15, 0.35],
@@ -56,7 +62,7 @@ export default function ProcessStepCard({ step, index, total }: ProcessStepCardP
                 </motion.div>
             </div>
 
-            <motion.div style={{ opacity, scale }} className="flex-1 pt-2">
+            <motion.div style={{ opacity, scale, filter }} className="flex-1 pt-2">
                 <span className="font-mono text-[10px] text-brand-neutral font-bold tracking-[.15em] uppercase">
                     {step.tag}
                 </span>

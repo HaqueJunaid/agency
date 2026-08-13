@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { services } from "@/constants";
+import ScrollReveal from "@/components/common/ScrollReveal";
 
 export default function Services() {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -31,35 +32,38 @@ export default function Services() {
             className="relative w-full py-24 px-6 lg:px-16 bg-brand-primary text-brand-secondary overflow-hidden cursor-none"
         >
             <div className="w-full mx-auto flex flex-col relative z-10">
-                <div className="flex flex-col gap-4 border-b border-brand-secondary/10 pb-10">
-                    <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-secondary">
-                        What We Do
-                    </h2>
-                    <p className="font-sans text-brand-neutral text-sm md:text-lg">
-                        Tailored creative capabilities to help your brand stand out.
-                    </p>
-                </div>
+                <ScrollReveal duration={0.8}>
+                    <div className="flex flex-col gap-4 border-b border-brand-secondary/10 pb-10">
+                        <h2 className="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tight text-brand-secondary">
+                            What We Do
+                        </h2>
+                        <p className="font-sans text-brand-neutral text-sm md:text-lg">
+                            Tailored creative capabilities to help your brand stand out.
+                        </p>
+                    </div>
+                </ScrollReveal>
                 <div className="flex flex-col w-full">
                     {services.map((service, index) => (
-                        <div
-                            key={service.id}
-                            onMouseEnter={() => setHoveredIndex(index)}
-                            onMouseLeave={() => setHoveredIndex(null)}
-                            data-cursor-text={service.title}
-                            className="group relative w-full border-b border-brand-secondary/10 py-10 md:py-12 flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center cursor-none transition-all duration-300"
-                        >
-                            <div className="font-heading font-black text-4xl md:text-5xl lg:text-7xl text-brand-tertiary md:text-brand-secondary/20 group-hover:text-brand-tertiary transition-colors duration-300 min-w-20">
-                                {service.id}
+                        <ScrollReveal key={service.id} delay={index * 0.08} duration={0.8} y={20}>
+                            <div
+                                onMouseEnter={() => setHoveredIndex(index)}
+                                onMouseLeave={() => setHoveredIndex(null)}
+                                data-cursor-text={service.title}
+                                className="group relative w-full border-b border-brand-secondary/10 py-10 md:py-12 flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center cursor-none transition-all duration-300"
+                            >
+                                <div className="font-heading font-black text-4xl md:text-5xl lg:text-7xl text-brand-tertiary md:text-brand-secondary/20 group-hover:text-brand-tertiary transition-colors duration-300 min-w-20">
+                                    {service.id}
+                                </div>
+                                <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-12">
+                                    <h3 className="font-heading font-black text-2xl md:text-3xl lg:text-4xl text-brand-secondary md:text-brand-secondary/20 group-hover:text-brand-secondary transition-colors duration-300">
+                                        {service.title}
+                                    </h3>
+                                    <p className="font-sans text-sm md:text-base text-brand-neutral md:max-w-md lg:max-w-lg leading-relaxed group-hover:text-brand-secondary/70 transition-colors duration-300">
+                                        {service.description}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-12">
-                                <h3 className="font-heading font-black text-2xl md:text-3xl lg:text-4xl text-brand-secondary md:text-brand-secondary/20 group-hover:text-brand-secondary transition-colors duration-300">
-                                    {service.title}
-                                </h3>
-                                <p className="font-sans text-sm md:text-base text-brand-neutral md:max-w-md lg:max-w-lg leading-relaxed group-hover:text-brand-secondary/70 transition-colors duration-300">
-                                    {service.description}
-                                </p>
-                            </div>
-                        </div>
+                        </ScrollReveal>
                     ))}
                 </div>
             </div>
