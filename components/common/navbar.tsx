@@ -187,12 +187,12 @@ const Navbar = () => {
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1.5">
                                     <p className="font-label text-brand-secondary/40 text-[9px] tracking-[.2em] uppercase">Get in touch</p>
-                                    <a
+                                    <Link
                                         href="mailto:hello@idealdesign.com"
                                         className="font-sans text-sm text-brand-secondary hover:text-brand-tertiary transition-colors duration-200"
                                     >
                                         hello@idealdesign.com
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     {[
@@ -216,13 +216,13 @@ const Navbar = () => {
                                             </svg>, href: "#"
                                         },
                                     ].map(({ label, href }) => (
-                                        <a
+                                        <Link
                                             key={href}
                                             href={href}
                                             className="font-label text-[9px] tracking-[.18em] text-brand-secondary/50 hover:text-brand-tertiary transition-colors duration-200 uppercase"
                                         >
                                             {label}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>
