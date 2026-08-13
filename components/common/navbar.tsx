@@ -158,6 +158,7 @@ const Navbar = () => {
                 >
                     <Link
                         href="/"
+                        data-magnetic
                         className="flex items-baseline gap-0"
                         style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                     >
@@ -199,6 +200,7 @@ const Navbar = () => {
 
                     <button
                         onClick={openContact}
+                        data-magnetic
                         className="group flex items-center gap-2 font-label font-bold text-[11px] tracking-[.14em] uppercase text-brand-primary
                                    border border-brand-primary/20 px-5 py-2.5 hover:bg-brand-primary hover:text-brand-secondary hover:border-brand-primary
                                    transition-all duration-300 cursor-pointer bg-transparent"
@@ -210,6 +212,7 @@ const Navbar = () => {
 
                 <button
                     onClick={() => setIsOpen(!isOpen)}
+                    data-magnetic
                     className="md:hidden relative z-50 flex flex-col justify-center items-end gap-1.25 w-10 h-10 focus:outline-none"
                     aria-label="Toggle Menu"
                 >

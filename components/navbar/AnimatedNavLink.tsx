@@ -53,6 +53,7 @@ export default function AnimatedNavLink({ label, link, onClick }: { label: strin
         return (
             <button
                 onClick={onClick}
+                data-magnetic
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 className={wrapperClass}
@@ -66,6 +67,7 @@ export default function AnimatedNavLink({ label, link, onClick }: { label: strin
     return (
         <Link
             href={link}
+            data-magnetic
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             className={wrapperClass}

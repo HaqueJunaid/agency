@@ -1,6 +1,6 @@
 import Navbar from "@/components/common/navbar";
 import AnimatedBackground from "@/components/common/AnimatedBackground";
-import MouseFollower from "@/components/common/MouseFollower";
+import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 import PageLoader from "@/components/common/PageLoader";
 import Footer from "@/components/common/Footer";
 import { ContactProvider } from "@/context/ContactContext";
@@ -11,17 +11,18 @@ const RootLayout = ({ children }: {children: React.ReactNode}) => {
     return (
         <ContactProvider>
             <SmoothScroll>
-                <div className="relative min-h-screen w-full bg-brand-secondary overflow-x-clip flex flex-col">
-                    <PageLoader />
-                    <MouseFollower />
-                    <Navbar />
-                    <div className="relative z-10 bg-brand-secondary md:mb-[620px]">
-                        <AnimatedBackground />
-                        {children}
+                <MagneticCursor magneticFactor={0.35} blendMode="exclusion" cursorSize={20}>
+                    <div className="relative min-h-screen w-full bg-brand-secondary overflow-x-clip flex flex-col">
+                        <PageLoader />
+                        <Navbar />
+                        <div className="relative z-10 bg-brand-secondary md:mb-[620px]">
+                            <AnimatedBackground />
+                            {children}
+                        </div>
+                        <Footer />
+                        <ContactModal />
                     </div>
-                    <Footer />
-                    <ContactModal />
-                </div>
+                </MagneticCursor>
             </SmoothScroll>
         </ContactProvider>
     );
