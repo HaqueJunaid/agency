@@ -158,7 +158,6 @@ const Navbar = () => {
                 >
                     <Link
                         href="/"
-                        data-magnetic
                         className="flex items-baseline gap-0"
                         style={{ color: isOpen ? "var(--color-brand-secondary)" : "var(--color-brand-primary)" }}
                     >

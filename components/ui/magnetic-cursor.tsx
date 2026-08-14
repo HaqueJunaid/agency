@@ -57,7 +57,9 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorStateRef = useRef<CursorState | null>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isTouchDevice] = useState(() => 
+    typeof window !== "undefined" ? ("ontouchstart" in window || navigator.maxTouchPoints > 0) : false
+  );
 
   const configRef = useRef({
     magneticFactor,
@@ -80,10 +82,6 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
       hoverPadding,
     };
   }, [magneticFactor, speedMultiplier, maxScaleX, maxScaleY, cursorSize, lerpAmount, hoverPadding]);
-
-  useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }, []);
 
   useEffect(() => {
     if (disableOnTouch && isTouchDevice) return;
@@ -182,7 +180,7 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
 
     const handleMouseLeave = () => gsap.to(cursorEl, { opacity: 0, duration: 0.3 });
     const handleMouseEnter = () => gsap.to(cursorEl, { opacity: 1, duration: 0.3 });
-    const handleClick = (event: MouseEvent) => {};
+    const handleClick = () => {};
 
     gsap.ticker.add(update);
     window.addEventListener('pointermove', onMouseMove);
@@ -195,9 +193,6 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
 
     const magneticElements = gsap.utils.toArray<HTMLElement>(`[${hoverAttribute}]`);
     magneticElements.forEach((el) => {
-      const xTo = gsap.quickTo(el, 'x', { duration: 1, ease: 'elastic.out(1, 0.3)' });
-      const yTo = gsap.quickTo(el, 'y', { duration: 1, ease: 'elastic.out(1, 0.3)' });
-
       const handlePointerEnter = () => {
         const state = cursorStateRef.current;
         if (!state) return;
@@ -262,31 +257,12 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
         });
       };
 
-      let rafId: number | null = null;
-      const handlePointerMove = (event: PointerEvent) => {
-        if (rafId) return;
-        rafId = requestAnimationFrame(() => {
-          const { clientX, clientY } = event;
-          const { height, width, left, top } = el.getBoundingClientRect();
-          const { magneticFactor } = configRef.current;
-          xTo((clientX - (left + width / 2)) * magneticFactor);
-          yTo((clientY - (top + height / 2)) * magneticFactor);
-          rafId = null;
-        });
-      };
-
-      const handlePointerOut = () => { xTo(0); yTo(0); };
-
       el.addEventListener('pointerenter', handlePointerEnter);
       el.addEventListener('pointerleave', handlePointerLeave);
-      el.addEventListener('pointermove', handlePointerMove);
-      el.addEventListener('pointerout', handlePointerOut);
 
       cleanupFunctions.push(() => {
         el.removeEventListener('pointerenter', handlePointerEnter);
         el.removeEventListener('pointerleave', handlePointerLeave);
-        el.removeEventListener('pointermove', handlePointerMove);
-        el.removeEventListener('pointerout', handlePointerOut);
       });
     });
 
@@ -310,7 +286,7 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
     pointerEvents: 'none',
     willChange: 'transform, width, height, border-radius',
     backgroundColor: cursorColor,
-    mixBlendMode: blendMode as any,
+    mixBlendMode: blendMode as React.CSSProperties['mixBlendMode'],
     width: cursorSize,
     height: cursorSize,
     borderRadius: shape === 'circle' ? '50%' : shape === 'square' ? '0' : '8px',

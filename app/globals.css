@@ -6,7 +6,7 @@ h1, h2, h3, h4, h6, p, div, section, span {
   cursor: default;
 }
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-brand-primary: #0F0F0F;

@@ -9,12 +9,27 @@ export default function MouseFollower() {
     const [cursorType, setCursorType] = useState<"default" | "pointer" | "text">("default");
     const [cursorText, setCursorText] = useState("");
     const [isVisible, setIsVisible] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
 
     const springConfig = { damping: 30, stiffness: 350, mass: 0.5 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
     useEffect(() => {
+        const checkDevice = () => {
+            setIsDesktop(window.innerWidth >= 1024);
+        };
+        
+        checkDevice();
+        window.addEventListener("resize", checkDevice);
+        return () => {
+            window.removeEventListener("resize", checkDevice);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isDesktop) return;
+
         const moveCursor = (e: MouseEvent) => {
             cursorX.set(e.clientX);
             cursorY.set(e.clientY);
@@ -32,9 +47,11 @@ export default function MouseFollower() {
             window.removeEventListener("mousemove", moveCursor);
             document.removeEventListener("mouseleave", handleMouseLeaveWindow);
         };
-    }, [cursorX, cursorY, isVisible]);
+    }, [cursorX, cursorY, isVisible, isDesktop]);
 
     useEffect(() => {
+        if (!isDesktop) return;
+
         const handleMouseEnter = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target) return;
@@ -64,9 +81,9 @@ export default function MouseFollower() {
             document.removeEventListener("mouseover", handleMouseEnter, true);
             document.removeEventListener("mouseout", handleMouseLeave, true);
         };
-    }, []);
+    }, [isDesktop]);
 
-    if (!isVisible) return null;
+    if (!isDesktop || !isVisible) return null;
 
     const size = cursorType === "text" ? 150 : cursorType === "pointer" ? 50 : 16;
 
