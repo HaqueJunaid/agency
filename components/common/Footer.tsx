@@ -14,7 +14,7 @@ export default function Footer() {
     const marqueeText = "HIGH-VELOCITY CREATIVE ✦ SOCIAL ADVERTISING ✦ WEB DEVELOPMENT ✦ BRAND STRATEGY ✦ ART DIRECTION ✦ ";
 
     return (
-        <footer className="relative md:sticky md:bottom-0 md:z-0 w-full md:h-155 bg-[#090909] text-brand-secondary overflow-hidden flex flex-col justify-between py-12 px-6 lg:px-16 border-t border-white/5">
+        <footer className="relative md:sticky md:bottom-0 md:z-0 w-full md:h-155 bg-brand-primary text-brand-secondary overflow-hidden flex flex-col justify-between py-12 px-6 lg:px-16">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(51,102,255,0.07),transparent_60%)] pointer-events-none" />
 
             <div 
@@ -31,11 +31,6 @@ export default function Footer() {
                     <span className="pr-4">{marqueeText}</span>
                     <span className="pr-4">{marqueeText}</span>
                 </motion.div>
-            </div>
-
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-transparent text-[22vw] font-heading font-black tracking-tighter select-none pointer-events-none leading-none z-0"
-                style={{ WebkitTextStroke: "1px rgba(255,255,255,0.01)" }}>
-                IDEAL
             </div>
 
             <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center mt-20 gap-8 md:gap-12">
@@ -62,7 +57,7 @@ export default function Footer() {
                     </Link>
                 </div>
 
-                <div className="flex flex-wrap gap-2.5 justify-center items-center mt-2">
+                <div className="flex flex-wrap gap-2.5 justify-center items-center mt-2 mb-10 md:mb-0">
                     {["Privacy Policy", "Terms of Service", "Support"].map((item) => (
                         <Link
                             key={item}

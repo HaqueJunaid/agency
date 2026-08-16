@@ -15,7 +15,7 @@ const RootLayout = ({ children }: {children: React.ReactNode}) => {
                     <div className="relative min-h-screen w-full bg-brand-secondary overflow-x-clip flex flex-col">
                         <PageLoader />
                         <Navbar />
-                        <div className="relative z-10 bg-brand-secondary md:mb-[620px]">
+                        <div className="relative z-10 bg-brand-secondary md:mb-155">
                             <AnimatedBackground />
                             {children}
                         </div>

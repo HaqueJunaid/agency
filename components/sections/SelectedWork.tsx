@@ -47,12 +47,6 @@ export default function SelectedWork() {
                                 Ideas designed to move brands forward.
                             </p>
                         </div>
-                        <Link
-                            href="/work"
-                            className="font-label font-bold text-xs md:text-sm tracking-widest text-brand-primary uppercase border-b border-brand-primary hover:text-brand-neutral hover:border-brand-neutral transition-all duration-350 pb-1"
-                        >
-                            VIEW ARCHIVE
-                        </Link>
                     </div>
                 </ScrollReveal>
 

@@ -48,49 +48,49 @@ const PixelDot = ({ trigger }: { trigger: boolean }) => {
                     <>
                         <motion.span
                             initial={{ x: 0, y: 0, opacity: 0 }}
-                            animate={{ 
-                                x: [0, 5, 8], 
-                                y: [0, -10, -20], 
-                                opacity: [0, 1, 0], 
-                                scale: [1, 0.8, 0.4] 
+                            animate={{
+                                x: [0, 5, 8],
+                                y: [0, -10, -20],
+                                opacity: [0, 1, 0],
+                                scale: [1, 0.8, 0.4]
                             }}
-                            transition={{ 
-                                duration: 0.8, 
-                                repeat: Infinity, 
+                            transition={{
+                                duration: 0.8,
+                                repeat: Infinity,
                                 ease: "easeOut",
-                                delay: 0 
+                                delay: 0
                             }}
                             className="absolute inset-0 bg-brand-tertiary"
                         />
                         <motion.span
                             initial={{ x: 0, y: 0, opacity: 0 }}
-                            animate={{ 
-                                x: [0, -6, -10], 
-                                y: [0, -14, -26], 
-                                opacity: [0, 1, 0], 
-                                scale: [1, 0.8, 0.4] 
+                            animate={{
+                                x: [0, -6, -10],
+                                y: [0, -14, -26],
+                                opacity: [0, 1, 0],
+                                scale: [1, 0.8, 0.4]
                             }}
-                            transition={{ 
-                                duration: 0.9, 
-                                repeat: Infinity, 
+                            transition={{
+                                duration: 0.9,
+                                repeat: Infinity,
                                 ease: "easeOut",
-                                delay: 0.25 
+                                delay: 0.25
                             }}
                             className="absolute inset-0 bg-brand-tertiary"
                         />
                         <motion.span
                             initial={{ x: 0, y: 0, opacity: 0 }}
-                            animate={{ 
-                                x: [0, 2, 3], 
-                                y: [0, -18, -30], 
-                                opacity: [0, 1, 0], 
-                                scale: [1, 0.8, 0.4] 
+                            animate={{
+                                x: [0, 2, 3],
+                                y: [0, -18, -30],
+                                opacity: [0, 1, 0],
+                                scale: [1, 0.8, 0.4]
                             }}
-                            transition={{ 
-                                duration: 1.0, 
-                                repeat: Infinity, 
+                            transition={{
+                                duration: 1.0,
+                                repeat: Infinity,
                                 ease: "easeOut",
-                                delay: 0.5 
+                                delay: 0.5
                             }}
                             className="absolute inset-0 bg-brand-tertiary"
                         />
@@ -147,9 +147,8 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className={`px-6 md:px-12 lg:px-16 h-17 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-all duration-500 ${
-                (isVisible || isOpen) ? "translate-y-0" : "-translate-y-full"
-            } ${navBg}`}>
+            <nav className={`px-6 md:px-12 lg:px-16 h-17 flex items-center justify-between fixed w-full z-50 top-0 left-0 transition-all duration-500 ${(isVisible || isOpen) ? "translate-y-0" : "-translate-y-full"
+                } ${navBg}`}>
 
                 <motion.div
                     className="relative z-50 flex items-baseline gap-0 select-none cursor-pointer"
@@ -296,7 +295,7 @@ const Navbar = () => {
                                 <div className="flex flex-col gap-1.5">
                                     <p className="font-label text-brand-secondary/40 text-[9px] tracking-[.2em] uppercase">Get in touch</p>
                                     <Link
-                                        href="mailto:hello@idealdesign.com"
+                                        href="idealdesign.studio12@gmail.com"
                                         className="font-sans text-sm text-brand-secondary hover:text-brand-tertiary transition-colors duration-200"
                                     >
                                         hello@idealdesign.com
@@ -309,23 +308,23 @@ const Navbar = () => {
                                                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                                                 <circle cx="12" cy="12" r="4" />
                                                 <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
-                                            </svg>, href: "#"
+                                            </svg>, href: "#inst"
                                         },
                                         {
                                             label: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                                            </svg>, href: "#"
+                                            </svg>, href: "#github"
                                         },
                                         {
                                             label: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                                                 <rect x="2" y="9" width="4" height="12" />
                                                 <circle cx="4" cy="4" r="2" />
-                                            </svg>, href: "#"
+                                            </svg>, href: "#linkedin"
                                         },
                                     ].map(({ label, href }) => (
                                         <Link
-                                            key={href}
+                                            key={href + label}
                                             href={href}
                                             className="font-label text-[12px] tracking-[.18em] text-brand-secondary/50 hover:text-brand-tertiary transition-colors duration-200 uppercase"
                                         >
