@@ -13,8 +13,17 @@ export default function ContactModal() {
     const [mounted, setMounted] = useState(false);
     const [selectedServices, setSelectedServices] = useState<string[]>(["Paid Ads"]);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    
+    // Form field states
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [message, setMessage] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const toggleService = (service: string) => {
+        if (isSubmitting) return;
         setSelectedServices(prev =>
             prev.includes(service)
                 ? prev.filter(s => s !== service)
@@ -35,17 +44,53 @@ export default function ContactModal() {
             document.body.style.overflow = "auto";
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsSubmitted(false);
+            setErrorMsg(null);
         }
     }, [isContactOpen]);
 
     if (!mounted) return null;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitted(true);
-        setTimeout(() => {
-            closeContact();
-        }, 2800);
+        setIsSubmitting(true);
+        setErrorMsg(null);
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    phone,
+                    message,
+                    services: selectedServices,
+                }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Failed to send message. Please try again.");
+            }
+
+            setIsSubmitted(true);
+            setName("");
+            setEmail("");
+            setPhone("");
+            setMessage("");
+            setSelectedServices(["Paid Ads"]);
+
+            setTimeout(() => {
+                closeContact();
+            }, 2800);
+        } catch (err: any) {
+            setErrorMsg(err.message || "An unexpected error occurred.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return createPortal(
@@ -160,7 +205,10 @@ export default function ContactModal() {
                                                 type="text"
                                                 required
                                                 placeholder="Your Name"
-                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
+                                                disabled={isSubmitting}
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full disabled:opacity-50"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -170,7 +218,10 @@ export default function ContactModal() {
                                                 type="email"
                                                 required
                                                 placeholder="Email Address"
-                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                disabled={isSubmitting}
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full disabled:opacity-50"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -179,7 +230,10 @@ export default function ContactModal() {
                                             <input
                                                 type="tel"
                                                 placeholder="Contact Number"
-                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full"
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)}
+                                                disabled={isSubmitting}
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans w-full disabled:opacity-50"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -189,7 +243,10 @@ export default function ContactModal() {
                                                 required
                                                 rows={3}
                                                 placeholder="Tell us about your project"
-                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans resize-none w-full"
+                                                value={message}
+                                                onChange={(e) => setMessage(e.target.value)}
+                                                disabled={isSubmitting}
+                                                className="bg-transparent border-b border-brand-secondary/10 text-brand-secondary placeholder-brand-secondary/20 focus:outline-none focus:border-brand-tertiary py-3.5 transition-colors duration-300 text-sm font-sans resize-none w-full disabled:opacity-50"
                                             />
                                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-tertiary group-focus-within:w-full transition-all duration-300 pointer-events-none" />
                                         </div>
@@ -216,12 +273,19 @@ export default function ContactModal() {
                                             </div>
                                         </div>
 
+                                        {errorMsg && (
+                                            <div className="text-red-500 font-sans text-xs mt-2 text-left bg-red-500/10 border border-red-500/20 px-4 py-3 rounded-lg">
+                                                {errorMsg}
+                                            </div>
+                                        )}
+
                                         <button
                                             type="submit"
-                                            className="group mt-6 w-full flex items-center justify-center gap-3 font-label font-bold text-xs tracking-[0.15em] uppercase text-brand-primary bg-brand-secondary py-5  hover:bg-brand-tertiary hover:text-brand-secondary transition-all duration-300 shadow-lg cursor-pointer"
+                                            disabled={isSubmitting}
+                                            className="group mt-6 w-full flex items-center justify-center gap-3 font-label font-bold text-xs tracking-[0.15em] uppercase text-brand-primary bg-brand-secondary py-5 hover:bg-brand-tertiary hover:text-brand-secondary transition-all duration-300 shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            Send Message
-                                            <ArrowUpIcon className="size-6 rotate-90 group-hover:translate-x-2 transition-transform duration-300" />
+                                            {isSubmitting ? "Sending..." : "Send Message"}
+                                            {!isSubmitting && <ArrowUpIcon className="size-6 rotate-90 group-hover:translate-x-2 transition-transform duration-300" />}
                                         </button>
                                     </form>
                                 </motion.div>
