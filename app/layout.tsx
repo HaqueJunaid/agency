@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   title: "Ideal Design",
   description: "Ideal Design is a creative experience studio that creates bold social campaigns, digital experiences, and websites that turn attention into meaningful growth.",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.ico",
   },
   keywords: ["Ideal Design", "Creative Experience Studio", "Social Campaigns", "Digital Experiences", "Websites", "Attention", "Growth"],
   authors: [{ name: "Ideal Design" }],
