@@ -38,9 +38,9 @@ const Hero = () => {
                     <ScrollReveal duration={0.9} className="lg:col-span-7">
                         <div data-cursor-text="VIEW" className="w-full h-100 sm:h-125 lg:h-225 bg-zinc-200 overflow-hidden border border-brand-neutral/20 relative cursor-pointer">
                             <img 
-                                src="https://placehold.co/1200x1400/e4e4e7/71717a?text=Creative+Agency+Mockup" 
+                                src="/assets/nooter-mockup.png" 
                                 alt="Design Agency Placeholder" 
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out" 
+                                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ease-out" 
                             />
                             <div className="absolute top-0 left-0 w-full h-10 border-b border-brand-neutral/20 bg-brand-secondary/80 backdrop-blur flex items-center justify-between px-4">
                                  <div className="flex gap-2">
@@ -57,7 +57,7 @@ const Hero = () => {
                         <ScrollReveal delay={0.1} duration={0.9} className="flex-1">
                             <div data-cursor-text="EXPLORE" className="w-full h-full bg-zinc-200 overflow-hidden relative cursor-pointer">
                                 <img 
-                                    src="https://placehold.co/800x600/e4e4e7/71717a?text=Digital+Experience" 
+                                    src="https://www.free-mockup.com/wp-content/uploads/edd/2024/09/iPhone-15-Pro-Free-Mockups-01.jpg" 
                                     alt="Digital Experience Placeholder" 
                                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out" 
                                 />
